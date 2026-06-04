@@ -1,0 +1,409 @@
+
+/* Базовые настройки */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #e3f2fd; /* Нежно-голубой цвет фона */
+    color: #1e293b;            /* Темный цвет текста для отличной читаемости */
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Скролл теперь стандартный и плавный */
+.site-wrapper {
+    width: 100%;
+    max-width: 600px; /* Ограничиваем ширину, чтобы на компьютерах выглядело как на телефоне */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Приветственный экран */
+.welcome-screen {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #00ecff;
+    color: #0b131a;
+    font-weight: bold;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #475569; /* Благородный серый цвет текста */
+}
+
+/* Блоки с историями */
+.timeline-story {
+    padding: 60px 0;
+}
+
+.fact-block {
+    margin-bottom: 80px;
+    background: #ffffff; /* Белый фон карточки */
+    padding: 30px;
+    border-radius: 16px;
+    /* Мягкая эстетичная тень, чтобы карточка плавно отделялась от фона */
+    box-shadow: 0 10px 25px rgba(30, 41, 59, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.fact-date {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0284c7; /* Насыщенный голубой цвет для дат */
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-align: center; /* Центрирует заголовки всех фактов на сайте */
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #334155;
+    text-align: justify; /* Выравнивает текст ровно по левому и правому краям карточки */
+    text-indent: 25px;   /* Создает красивую красную строку (отступ) в начале абзаца */
+}
+
+/* Кнопка подробностей */
+.read-more-btn {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: #0284c7; /* Голубой цвет ссылки */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 0;
+    transition: opacity 0.2s ease;
+}
+
+.read-more-btn:hover {
+    opacity: 0.8;
+}
+
+/* ======================================================= */
+/* СТИЛИ ДЛЯ ВСПЛЫВАЮЩИХ ОКОН (POPUPS) */
+/* ======================================================= */
+
+/* Темный фон за окном */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px); /* Красивое размытие заднего плана */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 20px;
+}
+
+/* Всплывающее окно */
+.popup-window {
+    background: #ffffff; /* Белый фон окна */
+    width: 100%;
+    max-width: 500px;
+    padding: 40px 30px 30px 30px;
+    border-radius: 24px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Показываем окно при активации класса visible */
+.popup-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-overlay.visible .popup-window {
+    transform: scale(1);
+}
+
+/* Кнопка Крестик */
+.close-popup-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #a0a8b0;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.popup-meta {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #0284c7; /* Голубой цвет для надписи "Секретные архивы" */
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Заголовок внутри всплывающего окна */
+.popup-window h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #1e293b; /* Насыщенный темный цвет */
+}
+
+.popup-window p {
+    color: #334155;
+    font-size: 1.1rem;
+    text-align: justify; /* Выравнивание по ширине внутри поп-апа */
+    text-indent: 25px;   /* Красная строка внутри поп-апа */
+}
+
+/* Картинки внутри окон (если добавите) */
+.popup-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+/* Отступ и анимация для подсказки скролла */
+.scroll-arrow {
+    margin-top: 40px;      /* Большой отступ сверху, чтобы строка не сливалась с текстом */
+    font-size: 1.1rem;     /* Чуть-чуть увеличим размер шрифта */
+    color: #475569;        /* Красивый серый цвет в тон подзаголовка */
+    font-weight: bold;
+    animation: bounce 2s infinite; /* Включаем плавное покачивание вверх-вниз */
+}
+
+/* Код для эффекта покачивания стрелочки */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+/* Красивая праздничная кнопка в ленте сайта */
+.open-album-btn {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(2, 132, 199, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.open-album-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(2, 132, 199, 0.3);
+}
+
+/* Окно полноэкранного просмотра */
+.fullscreen-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Используем полупрозрачный темный цвет, чтобы было видно размытые облака */
+    background: rgba(11, 19, 26, 0.75);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 20px;
+}
+
+.fullscreen-viewer.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Обертка для фото и кнопок внутри темного окна */
+.full-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 80vh;
+    background: transparent !important;
+    overflow: hidden;
+    box-shadow: none !important; /* УБИРАЕТ ту самую серую прямоугольную тень-границу по бокам */
+}
+
+/* Двигающаяся лента */
+.full-slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Слайд */
+.full-slider-slide {
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important; /* Убирает серый/черный прямоугольный фон */
+    box-shadow: none !important;       /* Убирает прямоугольную тень подложки */
+    border: none !important;           /* На всякий случай стирает любые рамки */
+}
+
+/* Картинка на весь экран */
+.full-slider-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* Кнопки-стрелочки внутри темного окна */
+.full-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 2010;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.full-slider-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.f-prev-btn { left: 20px; }
+.f-next-btn { right: 20px; }
+
+/* Белый крестик закрытия сверху */
+.close-viewer-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 3.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    z-index: 2020;
+    transition: opacity 0.2s;
+}
+
+.close-viewer-btn:hover { opacity: 1; }
+
+/* Белый счетчик страниц под фотографией */
+.full-slider-counter {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #94a3b8;
+    z-index: 2010;
+}
+
+/* Отменяем красную строку и выравнивание по ширине для списков */
+.no-indent {
+    text-indent: 0 !important;   /* Полностью убирает отступ первой строки */
+    text-align: left !important; /* Выравнивает список по левому краю */
+}
+
+/* Стили для финальной фразы */
+.final-accent {
+    text-align: center !important; /* Намертво центрирует текст по середине */
+    text-indent: 0 !important;     /* Убирает красную строку, чтобы центрирование было ровным */
+    margin-top: 25px;              /* Создает пустую строку (отступ) от верхнего текста */
+    font-weight: bold;             /* Можно сделать фразу чуть поярче (опционально) */
+    color: #1e293b;
+}
+
+body {
+    /* ... ваши текущие стили (шрифты, цвет текста и т.д.) ... */
+
+    /* Путь к вашей фоновой картинке (например, красивый пейзаж, небо или текстура) */
+    background-image: url('img/444.jpg');
+
+    /* МАГИЯ: картинка фиксируется на экране и не двигается при скролле */
+    background-attachment: fixed;
+
+    /* Картинка автоматически подстроится под размер экрана без искажений */
+    background-size: cover;
+
+    /* Центрируем фоновое изображение */
+    background-position: center;
+
+    /* Запрещаем картинке размножаться плиткой */
+    background-repeat: no-repeat;
+}
+
+/* Стиль для рамки приветствия */
+.welcome-card {
+    background: #ffffff; /* Белый фон карточки */
+    padding: 40px; /* Отступы внутри рамки */
+    border-radius: 16px; /* Скругление углов */
+    box-shadow: 0 10px 25px rgba(30, 41, 59, 0.05); /* Мягкая эстетичная тень */
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    /* Ограничим ширину и отцентруем карточку на экране */
+    max-width: 800px;
+    margin: 40px auto; /* Отступы сверху/снизу и центрирование по бокам */
+    text-align: center; /* Выравнивание текста по центру внутри рамки */
+}

@@ -5,6 +5,13 @@
     font-weight: normal;
     font-style: normal;
 }
+/* Подключаем прямую Lora для обычного текста */
+@font-face {
+    font-family: 'Lora Custom';
+    src: url('fonts/Lora.ttf') format('truetype'); /* Используем Regular версию */
+    font-weight: normal;
+    font-style: normal;
+}
 /* Базовые настройки */
 * {
     margin: 0;
@@ -13,7 +20,8 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Lora Custom', Georgia, serif; /* Lora основная, Georgia — запасная */
+    font-size: 18px; /* Для Лоры на телефонах лучше поставить 18px, чтобы слова помещались */
     background-color: #e3f2fd; /* Нежно-голубой цвет фона */
     color: #1e293b;            /* Темный цвет текста для отличной читаемости */
     line-height: 1.6;

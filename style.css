@@ -1,4 +1,10 @@
-
+/* 1. Оставляем только Playfair Display для заголовков */
+@font-face {
+    font-family: 'Playfair Custom';
+    src: url('fonts/PlayfairDisplay.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 /* Базовые настройки */
 * {
     margin: 0;
@@ -44,6 +50,7 @@ body {
 }
 
 h1 {
+    font-family: 'Playfair Custom', Times, serif; /* Добавляем эту строчку */
     font-size: 2rem;
     line-height: 1.1;
     margin-bottom: 20px;
@@ -79,6 +86,7 @@ h1 {
 }
 
 h2 {
+    font-family: 'Playfair Custom', Times, serif; /* Добавляем эту строчку */
     font-size: 1.8rem;
     margin-bottom: 15px;
     line-height: 1.2;

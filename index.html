@@ -227,37 +227,46 @@
             }
         }
 
+// ГЛОБАЛЬНЫЙ ОБРАБОТЧИК: ловит жесты по ВСЕМУ экрану слайдера
 let fTouchStartX = 0;
-const fTrack = document.getElementById('fullSliderTrack');
-const fCounter = document.getElementById('fullSliderCounter'); // Наш счетчик для вывода логов
+const fViewer = document.getElementById('photoViewer');
 
-if (fTrack) {
-    fTrack.addEventListener('touchstart', (e) => {
+if (fViewer) {
+    // Находим счетчик точно так же, как он объявлен в вашей функции выше
+    const debugCounter = document.getElementById('fullSliderCounter');
+
+    fViewer.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length === 0) return;
         fTouchStartX = e.touches[0].clientX;
-        if (fCounter) fCounter.innerText = "Касание началось...";
+        if (debugCounter) debugCounter.innerText = "Касание на экране...";
     }, { passive: true });
 
-    fTrack.addEventListener('touchend', (e) => {
+    fViewer.addEventListener('touchend', (e) => {
         if (!e.changedTouches || e.changedTouches.length === 0) return;
+
         let fTouchEndX = e.changedTouches[0].clientX;
         let fDiffX = fTouchStartX - fTouchEndX;
 
-        if (fCounter) {
-            fCounter.innerText = `Разница: ${Math.round(fDiffX)}px`;
+        if (debugCounter) {
+            debugCounter.innerText = `Движение: ${Math.round(fDiffX)}px`;
         }
 
+        // Порог свайпа — 50 пикселей (ВСЕ СКОБКИ ИСПРАВЛЕНЫ)
         if (Math.abs(fDiffX) > 50) {
             if (fDiffX > 0) {
-                if (fCounter) fCounter.innerText = "Свайп влево! Вперед!";
-                moveFullSlider(1);
+                if (debugCounter) debugCounter.innerText = "Свайп ВЛЕВО!";
+                moveFullSlider(1);  // Листаем вперед
             } else {
-                if (fCounter) fCounter.innerText = "Свайп вправо! Назад!";
-                moveFullSlider(-1);
+                if (debugCounter) debugCounter.innerText = "Свайп ВПРАВО!";
+                moveFullSlider(-1); // Листаем назад
             }
         }
-        fTouchStartX = 0;
+
+        fTouchStartX = 0; // Сброс
     }, { passive: true });
 }
+
+
 
     </script>
 

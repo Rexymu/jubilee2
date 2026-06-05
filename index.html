@@ -230,17 +230,18 @@
         // Поддержка свайпов пальцем прямо на темном экране телефона
         let fTouchStartX = 0;
         const fViewer = document.getElementById('photoViewer');
+
         if (fViewer) {
             fViewer.addEventListener('touchstart', (e) => {
-                fTouchStartX = e.touches[0].clientX;
+                fTouchStartX = e.touches[0].clientX; // Здесь все верно
             }, { passive: true });
 
             fViewer.addEventListener('touchend', (e) => {
                 let fTouchEndX = e.changedTouches[0].clientX;
                 let fDiffX = fTouchStartX - fTouchEndX;
                 if (Math.abs(fDiffX) > 50) {
-                    if (fDiffX > 0) moveFullSlider(1); // Свайп влево -> вперед
-                    else moveFullSlider(-1);           // Свайп вправо -> назад
+                    if (fDiffX > 0) moveFullSlider(1);  // Свайп влево -> вперед
+                    else moveFullSlider(-1);            // Свайп вправо -> назад
                 }
             }, { passive: true });
         }

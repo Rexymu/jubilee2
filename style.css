@@ -270,6 +270,7 @@ p {
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     padding: 20px;
+    touch-action: pan-y;
 }
 
 .fullscreen-viewer.active {

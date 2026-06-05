@@ -270,7 +270,9 @@ p {
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     padding: 20px;
-    touch-action: pan-y;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .fullscreen-viewer.active {
@@ -320,6 +322,8 @@ p {
     display: block;
     margin: 0 auto;
     object-fit: contain;
+    -webkit-user-drag: none;
+    pointer-events: none;
 }
 
 /* Кнопки-стрелочки внутри темного окна */

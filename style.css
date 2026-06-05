@@ -273,6 +273,7 @@ p {
     touch-action: none;
     -webkit-user-select: none;
     user-select: none;
+    pointer-events: auto !important;
 }
 
 .fullscreen-viewer.active {

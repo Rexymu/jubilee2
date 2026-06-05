@@ -227,43 +227,42 @@
             }
         }
 
-// ГЛОБАЛЬНЫЙ ОБРАБОТЧИК: ловит жесты по ВСЕМУ экрану слайдера
-let fTouchStartX = 0;
+// ЖЕЛЕЗОБЕТОННЫЙ ВАРИАНТ НА POINTER EVENTS
+let fPointerStartX = 0;
 const fViewer = document.getElementById('photoViewer');
 
 if (fViewer) {
-    // Находим счетчик точно так же, как он объявлен в вашей функции выше
     const debugCounter = document.getElementById('fullSliderCounter');
 
-    fViewer.addEventListener('touchstart', (e) => {
-        if (!e.touches || e.touches.length === 0) return;
-        fTouchStartX = e.touches[0].clientX;
-        if (debugCounter) debugCounter.innerText = "Касание на экране...";
-    }, { passive: true });
+    // pointerdown одинаково ловит и клик мыши, и прикосновение пальца
+    fViewer.addEventListener('pointerdown', (e) => {
+        fPointerStartX = e.clientX;
+        if (debugCounter) debugCounter.innerText = "Палец на экране...";
+    });
 
-    fViewer.addEventListener('touchend', (e) => {
-        if (!e.changedTouches || e.changedTouches.length === 0) return;
+    fViewer.addEventListener('pointerup', (e) => {
+        if (!fPointerStartX) return; // Если нажатия не было — выходим
 
-        let fTouchEndX = e.changedTouches[0].clientX;
-        let fDiffX = fTouchStartX - fTouchEndX;
+        let fPointerEndX = e.clientX;
+        let fDiffX = fPointerStartX - fPointerEndX;
 
         if (debugCounter) {
-            debugCounter.innerText = `Движение: ${Math.round(fDiffX)}px`;
+            debugCounter.innerText = `Сдвиг: ${Math.round(fDiffX)}px`;
         }
 
-        // Порог свайпа — 50 пикселей (ВСЕ СКОБКИ ИСПРАВЛЕНЫ)
+        // Порог чувствительности свайпа (50 пикселей)
         if (Math.abs(fDiffX) > 50) {
             if (fDiffX > 0) {
-                if (debugCounter) debugCounter.innerText = "Свайп ВЛЕВО!";
+                if (debugCounter) debugCounter.innerText = "Свайп влево (Вперед)";
                 moveFullSlider(1);  // Листаем вперед
             } else {
-                if (debugCounter) debugCounter.innerText = "Свайп ВПРАВО!";
+                if (debugCounter) debugCounter.innerText = "Свайп вправо (Назад)";
                 moveFullSlider(-1); // Листаем назад
             }
         }
 
-        fTouchStartX = 0; // Сброс
-    }, { passive: true });
+        fPointerStartX = 0; // Сброс
+    });
 }
 
 

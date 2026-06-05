@@ -227,38 +227,35 @@
             }
         }
 
- // ЖЕЛЕЗОБЕТОННЫЙ ВАРИАНТ С ОТМЕНОЙ БРАУЗЕРНЫХ СОБЫТИЙ
+// ИСПРАВЛЕННЫЙ ВАРИАНТ: ловим свайпы прямо на ленте с фотографиями
 let fTouchStartX = 0;
-const fViewer = document.getElementById('photoViewer');
+// Изменили выбор элемента: берем именно ТРЕК со слайдами
+const fTrack = document.getElementById('fullSliderTrack');
 
-if (fViewer) {
-    // Важно: убираем {passive: true}, чтобы разрешить e.preventDefault()
-    fViewer.addEventListener('touchstart', (e) => {
+if (fTrack) {
+    // Отслеживаем касание на треке
+    fTrack.addEventListener('touchstart', (e) => {
         fTouchStartX = e.touches[0].clientX;
-    }, { passive: false });
+    }, { passive: true });
 
-    fViewer.addEventListener('touchmove', (e) => {
-        // Блокируем стандартный скролл страницы и жесты «назад/вперед» в браузере, пока открыт слайдер
-        e.preventDefault();
-    }, { passive: false });
-
-    fViewer.addEventListener('touchend', (e) => {
+    // Отслеживаем палец при отрыве от трека
+    fTrack.addEventListener('touchend', (e) => {
         if (!e.changedTouches || e.changedTouches.length === 0) return;
 
         let fTouchEndX = e.changedTouches[0].clientX;
         let fDiffX = fTouchStartX - fTouchEndX;
 
-        // Порог свайпа в 50 пикселей
+        // Порог чувствительности (50 пикселей)
         if (Math.abs(fDiffX) > 50) {
             if (fDiffX > 0) {
-                moveFullSlider(1);  // Палец влево -> вперед
+                moveFullSlider(1);  // Свайп влево -> вперед
             } else {
-                moveFullSlider(-1); // Палец вправо -> назад
+                moveFullSlider(-1); // Свайп вправо -> назад
             }
         }
-        
-        fTouchStartX = 0;
-    }, { passive: false });
+
+        fTouchStartX = 0; // Сброс
+    }, { passive: true });
 }
 
     </script>

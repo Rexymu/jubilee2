@@ -323,7 +323,6 @@ p {
     margin: 0 auto;
     object-fit: contain;
     -webkit-user-drag: none;
-    pointer-events: none;
 }
 
 /* Кнопки-стрелочки внутри темного окна */

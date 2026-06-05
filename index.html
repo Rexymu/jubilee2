@@ -227,34 +227,35 @@
             }
         }
 
-// ИСПРАВЛЕННЫЙ ВАРИАНТ: ловим свайпы прямо на ленте с фотографиями
 let fTouchStartX = 0;
-// Изменили выбор элемента: берем именно ТРЕК со слайдами
 const fTrack = document.getElementById('fullSliderTrack');
+const fCounter = document.getElementById('fullSliderCounter'); // Наш счетчик для вывода логов
 
 if (fTrack) {
-    // Отслеживаем касание на треке
     fTrack.addEventListener('touchstart', (e) => {
         fTouchStartX = e.touches[0].clientX;
+        if (fCounter) fCounter.innerText = "Касание началось...";
     }, { passive: true });
 
-    // Отслеживаем палец при отрыве от трека
     fTrack.addEventListener('touchend', (e) => {
         if (!e.changedTouches || e.changedTouches.length === 0) return;
-
         let fTouchEndX = e.changedTouches[0].clientX;
         let fDiffX = fTouchStartX - fTouchEndX;
 
-        // Порог чувствительности (50 пикселей)
-        if (Math.abs(fDiffX) > 50) {
-            if (fDiffX > 0) {
-                moveFullSlider(1);  // Свайп влево -> вперед
-            } else {
-                moveFullSlider(-1); // Свайп вправо -> назад
-            }
+        if (fCounter) {
+            fCounter.innerText = `Разница: ${Math.round(fDiffX)}px`;
         }
 
-        fTouchStartX = 0; // Сброс
+        if (Math.abs(fDiffX) > 50) {
+            if (fDiffX > 0) {
+                if (fCounter) fCounter.innerText = "Свайп влево! Вперед!";
+                moveFullSlider(1);
+            } else {
+                if (fCounter) fCounter.innerText = "Свайп вправо! Назад!";
+                moveFullSlider(-1);
+            }
+        }
+        fTouchStartX = 0;
     }, { passive: true });
 }
 

@@ -227,24 +227,37 @@
             }
         }
 
-        // Поддержка свайпов пальцем прямо на темном экране телефона
-        let fTouchStartX = 0;
-        const fViewer = document.getElementById('photoViewer');
+ // НАДЕЖНАЯ ПОДДЕРЖКА СВАЙПОВ НА СМАРТФОНАХ (Замените этим ваш блок)
+let fTouchStartX = 0;
+const fViewer = document.getElementById('photoViewer');
 
-        if (fViewer) {
-            fViewer.addEventListener('touchstart', (e) => {
-                fTouchStartX = e.touches[0].clientX; // Здесь все верно
-            }, { passive: true });
+if (fViewer) {
+    fViewer.addEventListener('touchstart', (e) => {
+        // Запоминаем координату первого касания
+        fTouchStartX = e.touches[0].clientX;
+    }, { passive: true });
 
-            fViewer.addEventListener('touchend', (e) => {
-                let fTouchEndX = e.changedTouches[0].clientX;
-                let fDiffX = fTouchStartX - fTouchEndX;
-                if (Math.abs(fDiffX) > 50) {
-                    if (fDiffX > 0) moveFullSlider(1);  // Свайп влево -> вперед
-                    else moveFullSlider(-1);            // Свайп вправо -> назад
-                }
-            }, { passive: true });
+    fViewer.addEventListener('touchend', (e) => {
+        // Для touchend ВСЕГДА используем changedTouches, так как touches уже пуст!
+        let fTouchEndX = e.changedTouches[0].clientX;
+
+        // Считаем разницу движения
+        let fDiffX = fTouchStartX - fTouchEndX;
+
+        // Порог чувствительности свайпа (50 пикселей)
+        if (Math.abs(fDiffX) > 50) {
+            if (fDiffX > 0) {
+                moveFullSlider(1);  // Свайп влево -> следующий слайд
+            } else {
+                moveFullSlider(-1); // Свайп вправо -> предыдущий слайд
+            }
         }
+
+        // Сбрасываем значение для следующего жеста
+        fTouchStartX = 0;
+    }, { passive: true });
+}
+
 
     </script>
 

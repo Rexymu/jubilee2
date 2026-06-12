@@ -231,17 +231,26 @@
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Минимальная дистанция в пикселях, чтобы свайп считался успешным
-const swipeThreshold = 50;
+// Минимальная дистанция в пикселях для свайпа
+const swipeThreshold = 40;
+
+const viewer = document.getElementById('photoViewer');
 
 // Регистрируем начальную точку касания
-document.getElementById('photoViewer').addEventListener('touchstart', function(e) {
-    touchStartX = e.changedTouches[0].screenX;
+viewer.addEventListener('touchstart', function(e) {
+    // Берём координату первого пальца
+    touchStartX = e.touches[0].clientX;
 }, { passive: true });
 
-// Регистрируем конечную точку и вычисляем направление
-document.getElementById('photoViewer').addEventListener('touchend', function(e) {
-    touchEndX = e.changedTouches[0].screenX;
+// Регистрируем движение (опционально, чтобы запретить стандартный скролл страницы во время свайпа фото)
+viewer.addEventListener('touchmove', function(e) {
+    // Если нужно, чтобы страница под слайдером не скроллилась во время свайпа:
+    if (e.cancelable) e.preventDefault();
+}, { passive: false });
+
+// Регистрируем конечную точку и вызываем переключение
+viewer.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].clientX;
     handleSwipe();
 }, { passive: true });
 
@@ -249,13 +258,23 @@ document.getElementById('photoViewer').addEventListener('touchend', function(e) 
 function handleSwipe() {
     const swipeDistance = touchEndX - touchStartX;
 
-    // Если свайпнули справа налево -> следующий слайд
+    alert("Свайп зафиксирован! Дистанция: " + swipeDistance);
+
+    // Свайп влево (палец идет влево -> показываем следующий слайд)
     if (swipeDistance < -swipeThreshold) {
-        moveFullSlider(1);
+        if (typeof moveFullSlider === 'function') {
+            moveFullSlider(1);
+        } else {
+            console.error('Функция moveFullSlider не найдена');
+        }
     }
-    // Если свайпнули слева направо -> предыдущий слайд
+    // Свайп вправо (палец идет вправо -> показываем предыдущий слайд)
     else if (swipeDistance > swipeThreshold) {
-        moveFullSlider(-1);
+        if (typeof moveFullSlider === 'function') {
+            moveFullSlider(-1);
+        } else {
+            console.error('Функция moveFullSlider не найдена');
+        }
     }
 }
 

@@ -319,124 +319,127 @@ p {
     display: block;
     margin: 0 auto;
     object-fit: contain;
-    user-select: none; /* Запрещает выделение картинки */
-    -webkit-user-drag: none;
-    /* Запрещает браузерное перетаскивание картинки
+
 }
 
 /* Кнопки-стрелочки внутри темного окна */
-
-    .full-slider-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        font-size: 1.3rem;
-        cursor: pointer;
-        z-index: 2010;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #ffffff;
-        transition: background 0.2s, transform 0.2s;
-    }
-
-    .full-slider-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .f-prev-btn {
-        left: 20px;
-    }
-
-    .f-next-btn {
-        right: 20px;
-    }
-
-    /* Белый крестик закрытия сверху */
-
-    .close-viewer-btn {
-        position: absolute;
-        top: 25px;
-        right: 30px;
-        background: none;
-        border: none;
-        color: #ffffff;
-        font-size: 3.5rem;
-        cursor: pointer;
-        line-height: 1;
-        opacity: 0.7;
-        z-index: 2020;
-        transition: opacity 0.2s;
-    }
-
-    .close-viewer-btn:hover {
-        opacity: 1;
-    }
-
-    /* Белый счетчик страниц под фотографией */
-
-    .full-slider-counter {
-        margin-top: 20px;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #94a3b8;
-        z-index: 2010;
-    }
-
-    /* Отменяем красную строку и выравнивание по ширине для списков */
-
-    .no-indent {
-        text-indent: 0 !important; /* Полностью убирает отступ первой строки */
-        text-align: left !important; /* Выравнивает список по левому краю */
-    }
-
-    /* Стили для финальной фразы */
-
-    .final-accent {
-        text-align: center !important; /* Намертво центрирует текст по середине */
-        text-indent: 0 !important; /* Убирает красную строку, чтобы центрирование было ровным */
-        margin-top: 25px; /* Создает пустую строку (отступ) от верхнего текста */
-        font-weight: bold; /* Можно сделать фразу чуть поярче (опционально) */
-        color: #1e293b;
-    }
-
-    body {
-        /* ... ваши текущие стили (шрифты, цвет текста и т.д.) ... */
-
-        /* Путь к вашей фоновой картинке (например, красивый пейзаж, небо или текстура) */
-        background-image: url('img/444.jpg');
-
-        /* МАГИЯ: картинка фиксируется на экране и не двигается при скролле */
-        background-attachment: fixed;
-
-        /* Картинка автоматически подстроится под размер экрана без искажений */
-        background-size: cover;
-
-        /* Центрируем фоновое изображение */
-        background-position: center;
-
-        /* Запрещаем картинке размножаться плиткой */
-        background-repeat: no-repeat;
-    }
-
-    /* Стиль для рамки приветствия */
-
-    .welcome-card {
-        background: #ffffff; /* Белый фон карточки */
-        padding: 40px; /* Отступы внутри рамки */
-        border-radius: 16px; /* Скругление углов */
-        box-shadow: 0 10px 25px rgba(30, 41, 59, 0.05); /* Мягкая эстетичная тень */
-        border: 1px solid rgba(255, 255, 255, 0.7);
-
-        /* Ограничим ширину и отцентруем карточку на экране */
-        max-width: 800px;
-        margin: 40px auto; /* Отступы сверху/снизу и центрирование по бокам */
-        text-align: center; /* Выравнивание текста по центру внутри рамки */
-    }
+.full-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 2010;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    transition: background 0.2s, transform 0.2s;
 }
+
+.full-slider-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.f-prev-btn { left: 20px; }
+.f-next-btn { right: 20px; }
+
+/* Белый крестик закрытия сверху */
+.close-viewer-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 3.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    z-index: 2020;
+    transition: opacity 0.2s;
+}
+
+.close-viewer-btn:hover { opacity: 1; }
+
+/* Белый счетчик страниц под фотографией */
+.full-slider-counter {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #94a3b8;
+    z-index: 2010;
+}
+
+/* Отменяем красную строку и выравнивание по ширине для списков */
+.no-indent {
+    text-indent: 0 !important;   /* Полностью убирает отступ первой строки */
+    text-align: left !important; /* Выравнивает список по левому краю */
+}
+
+/* Стили для финальной фразы */
+.final-accent {
+    text-align: center !important; /* Намертво центрирует текст по середине */
+    text-indent: 0 !important;     /* Убирает красную строку, чтобы центрирование было ровным */
+    margin-top: 25px;              /* Создает пустую строку (отступ) от верхнего текста */
+    font-weight: bold;             /* Можно сделать фразу чуть поярче (опционально) */
+    color: #1e293b;
+}
+
+body {
+    /* ... ваши текущие стили (шрифты, цвет текста и т.д.) ... */
+
+    /* Путь к вашей фоновой картинке (например, красивый пейзаж, небо или текстура) */
+    background-image: url('img/444.jpg');
+
+    /* МАГИЯ: картинка фиксируется на экране и не двигается при скролле */
+    background-attachment: fixed;
+
+    /* Картинка автоматически подстроится под размер экрана без искажений */
+    background-size: cover;
+
+    /* Центрируем фоновое изображение */
+    background-position: center;
+
+    /* Запрещаем картинке размножаться плиткой */
+    background-repeat: no-repeat;
+}
+
+/* Стиль для рамки приветствия */
+.welcome-card {
+    background: #ffffff; /* Белый фон карточки */
+    padding: 40px; /* Отступы внутри рамки */
+    border-radius: 16px; /* Скругление углов */
+    box-shadow: 0 10px 25px rgba(30, 41, 59, 0.05); /* Мягкая эстетичная тень */
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    /* Ограничим ширину и отцентруем карточку на экране */
+    max-width: 800px;
+    margin: 40px auto; /* Отступы сверху/снизу и центрирование по бокам */
+    text-align: center; /* Выравнивание текста по центру внутри рамки */
+}
+
+/* Разрешаем обработку касаний скриптом и отменяем стандартные жесты браузера для слайдера */
+#photoViewer,
+.full-slider-wrapper,
+.full-slider-track,
+.full-slider-slide {
+    touch-action: pan-y; /* Позволяет скроллить страницу по вертикали, но забирает горизонтальные жесты */
+    pointer-events: auto !important; /* Гарантируем, что блоки реагируют на клики и касания */
+}
+
+/* Полностью запрещаем браузеру перехватывать жесты на картинках */
+.full-slider-slide img {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    pointer-events: none; /* Картинка пропускает касание сквозь себя на слайд/трек */
+}
+

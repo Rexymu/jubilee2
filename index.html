@@ -227,56 +227,48 @@
             }
         }
 
-        // Переменные для отслеживания свайпов
-let touchStartX = 0;
+        let touchStartX = 0;
 let touchEndX = 0;
-
-// Минимальная дистанция в пикселях для свайпа
-const swipeThreshold = 40;
+const swipeThreshold = 30; // Немного уменьшим порог для большей чувствительности
 
 const viewer = document.getElementById('photoViewer');
 
-// Регистрируем начальную точку касания
+// Обработчик начала касания
 viewer.addEventListener('touchstart', function(e) {
-    // Берём координату первого пальца
-    touchStartX = e.touches[0].clientX;
-}, { passive: true });
-
-// Регистрируем движение (опционально, чтобы запретить стандартный скролл страницы во время свайпа фото)
-viewer.addEventListener('touchmove', function(e) {
-    // Если нужно, чтобы страница под слайдером не скроллилась во время свайпа:
-    if (e.cancelable) e.preventDefault();
+    if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+    }
 }, { passive: false });
 
-// Регистрируем конечную точку и вызываем переключение
-viewer.addEventListener('touchend', function(e) {
-    touchEndX = e.changedTouches[0].clientX;
-    handleSwipe();
-}, { passive: true });
+// Обработчик движения пальца (чтобы страница не дергалась при свайпе)
+viewer.addEventListener('touchmove', function(e) {
+    // Если палец движется горизонтально, отменяем стандартный скролл страницы
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+}, { passive: false });
 
-// Функция определения свайпа
+// Обработчик завершения касания
+viewer.addEventListener('touchend', function(e) {
+    if (e.changedTouches && e.changedTouches.length > 0) {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+    }
+}, { passive: false });
+
 function handleSwipe() {
     const swipeDistance = touchEndX - touchStartX;
 
-    alert("Свайп зафиксирован! Дистанция: " + swipeDistance);
+    // ВРЕМЕННЫЙ ТЕСТ: проверяем, доходит ли сюда событие теперь
+    alert("Событие поймано! Дистанция: " + swipeDistance);
 
-    // Свайп влево (палец идет влево -> показываем следующий слайд)
     if (swipeDistance < -swipeThreshold) {
-        if (typeof moveFullSlider === 'function') {
-            moveFullSlider(1);
-        } else {
-            console.error('Функция moveFullSlider не найдена');
-        }
-    }
-    // Свайп вправо (палец идет вправо -> показываем предыдущий слайд)
-    else if (swipeDistance > swipeThreshold) {
-        if (typeof moveFullSlider === 'function') {
-            moveFullSlider(-1);
-        } else {
-            console.error('Функция moveFullSlider не найдена');
-        }
+        if (typeof moveFullSlider === 'function') moveFullSlider(1);
+    } else if (swipeDistance > swipeThreshold) {
+        if (typeof moveFullSlider === 'function') moveFullSlider(-1);
     }
 }
+
 
     </script>
 

@@ -60,7 +60,7 @@ body {
 h1 {
     font-family: 'Playfair Custom', Times, serif; /* Добавляем эту строчку */
     font-size: 2rem;
-    line-height: 1;
+    line-height: 0.9;
     margin-bottom: 20px;
 }
 

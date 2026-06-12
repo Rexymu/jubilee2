@@ -227,23 +227,37 @@
             }
         }
 
-        // Поддержка свайпов пальцем прямо на темном экране телефона
-        let fTouchStartX = 0;
-        const fViewer = document.getElementById('photoViewer');
-        if (fViewer) {
-            fViewer.addEventListener('touchstart', (e) => {
-                fTouchStartX = e.touches[0].clientX;
-            }, { passive: true });
+        // Переменные для отслеживания свайпов
+let touchStartX = 0;
+let touchEndX = 0;
 
-            fViewer.addEventListener('touchend', (e) => {
-                let fTouchEndX = e.changedTouches[0].clientX;
-                let fDiffX = fTouchStartX - fTouchEndX;
-                if (Math.abs(fDiffX) > 50) {
-                    if (fDiffX > 0) moveFullSlider(1); // Свайп влево -> вперед
-                    else moveFullSlider(-1);           // Свайп вправо -> назад
-                }
-            }, { passive: true });
-        }
+// Минимальная дистанция в пикселях, чтобы свайп считался успешным
+const swipeThreshold = 50;
+
+// Регистрируем начальную точку касания
+document.getElementById('photoViewer').addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+// Регистрируем конечную точку и вычисляем направление
+document.getElementById('photoViewer').addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, { passive: true });
+
+// Функция определения свайпа
+function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+
+    // Если свайпнули справа налево -> следующий слайд
+    if (swipeDistance < -swipeThreshold) {
+        moveFullSlider(1);
+    }
+    // Если свайпнули слева направо -> предыдущий слайд
+    else if (swipeDistance > swipeThreshold) {
+        moveFullSlider(-1);
+    }
+}
 
     </script>
 
@@ -254,29 +268,46 @@
 
         <!-- Контейнер для фото и стрелочек -->
         <div class="full-slider-wrapper">
-            <!-- Стрелочки теперь внутри темного окна -->
-            <button class="full-slider-btn f-prev-btn" onclick="moveFullSlider(-1)">&#10094;</button>
-            <button class="full-slider-btn f-next-btn" onclick="moveFullSlider(1)">&#10095;</button>
 
             <!-- Лента с фотографиями (разложите файлы в папке img по порядку взросления папы!) -->
             <div class="full-slider-track" id="fullSliderTrack">
-                <div class="full-slider-slide"><img src="img/photo1.jpg" alt="Папа в детстве"></div>
-                <div class="full-slider-slide"><img src="img/photo2.jpg" alt="Папа в юности"></div>
-                <div class="full-slider-slide"><img src="img/photo3.jpg" alt="Папа в армии"></div>
-                <div class="full-slider-slide"><img src="img/photo4.jpg" alt="Папа 4"></div>
-                <div class="full-slider-slide"><img src="img/photo5.jpg" alt="Папа 5"></div>
-                <div class="full-slider-slide"><img src="img/photo6.jpg" alt="Папа 6"></div>
-                <div class="full-slider-slide"><img src="img/photo7.jpg" alt="Папа 7"></div>
-                <div class="full-slider-slide"><img src="img/photo8.jpg" alt="Папа 8"></div>
-                <div class="full-slider-slide"><img src="img/photo9.jpg" alt="Папа 9"></div>
-                <div class="full-slider-slide"><img src="img/photo10.jpg" alt="Папа 10"></div>
-                <div class="full-slider-slide"><img src="img/photo11.jpg" alt="Папа 11"></div>
-                <div class="full-slider-slide"><img src="img/photo12.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 1"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 2"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 3"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 4"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 5"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 6"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 7"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 8"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 9"></div>
+                <div class="full-slider-slide"><img src="img/папа20.png" alt="Папа 10"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 11"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
             </div>
         </div>
 
         <!-- Счётчик страниц внизу темного окна -->
-        <div class="full-slider-counter" id="fullSliderCounter">1 из 12</div>
+        <div class="full-slider-counter" id="fullSliderCounter">1 из 31</div>
     </div>
 
 </body>

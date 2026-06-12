@@ -125,7 +125,7 @@
     <div class="popup-overlay" id="popup-fact3">
         <div class="popup-window">
             <button class="close-popup-btn">&times;</button>
-            <p>Начитавшись книг Джека Лондона и Диккенса, Василий решил улететь в Америку через Берингов пролив. Он взял журналы «Юный техник» и по чертежам нескольких самолётов спроектировал один — свой «самолёт мечты». До сборки дело не дошло, но масштаб планов в 14 лет впечатляет! Ниже на фото как раз можно увидеть автора этого грандиозного проекта.</p>
+            <p>Начитавшись книг Джека Лондона и Диккенса, Василий решил улететь в Америку через Берингов пролив. Он взял журналы «Юный техник» и по чертежам нескольких самолётов спроектировал один — свой «самолёт мечты». До сборки дело не дошло, но масштаб планов в 14 лет впечатляет!</p>
         </div>
     </div>
 
@@ -227,48 +227,23 @@
             }
         }
 
-        let touchStartX = 0;
-let touchEndX = 0;
-const swipeThreshold = 30; // Немного уменьшим порог для большей чувствительности
+        // Поддержка свайпов пальцем прямо на темном экране телефона
+        let fTouchStartX = 0;
+        const fViewer = document.getElementById('photoViewer');
+        if (fViewer) {
+            fViewer.addEventListener('touchstart', (e) => {
+                fTouchStartX = e.touches[0].clientX;
+            }, { passive: true });
 
-const viewer = document.getElementById('photoViewer');
-
-// Обработчик начала касания
-viewer.addEventListener('touchstart', function(e) {
-    if (e.touches && e.touches.length > 0) {
-        touchStartX = e.touches[0].clientX;
-    }
-}, { passive: false });
-
-// Обработчик движения пальца (чтобы страница не дергалась при свайпе)
-viewer.addEventListener('touchmove', function(e) {
-    // Если палец движется горизонтально, отменяем стандартный скролл страницы
-    if (e.cancelable) {
-        e.preventDefault();
-    }
-}, { passive: false });
-
-// Обработчик завершения касания
-viewer.addEventListener('touchend', function(e) {
-    if (e.changedTouches && e.changedTouches.length > 0) {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipe();
-    }
-}, { passive: false });
-
-function handleSwipe() {
-    const swipeDistance = touchEndX - touchStartX;
-
-    // ВРЕМЕННЫЙ ТЕСТ: проверяем, доходит ли сюда событие теперь
-    alert("Событие поймано! Дистанция: " + swipeDistance);
-
-    if (swipeDistance < -swipeThreshold) {
-        if (typeof moveFullSlider === 'function') moveFullSlider(1);
-    } else if (swipeDistance > swipeThreshold) {
-        if (typeof moveFullSlider === 'function') moveFullSlider(-1);
-    }
-}
-
+            fViewer.addEventListener('touchend', (e) => {
+                let fTouchEndX = e.changedTouches[0].clientX;
+                let fDiffX = fTouchStartX - fTouchEndX;
+                if (Math.abs(fDiffX) > 50) {
+                    if (fDiffX > 0) moveFullSlider(1); // Свайп влево -> вперед
+                    else moveFullSlider(-1);           // Свайп вправо -> назад
+                }
+            }, { passive: true });
+        }
 
     </script>
 
@@ -279,46 +254,97 @@ function handleSwipe() {
 
         <!-- Контейнер для фото и стрелочек -->
         <div class="full-slider-wrapper">
+            <!-- Стрелочки теперь внутри темного окна -->
+            <button class="full-slider-btn f-prev-btn" onclick="moveFullSlider(-1)">&#10094;</button>
+            <button class="full-slider-btn f-next-btn" onclick="moveFullSlider(1)">&#10095;</button>
 
             <!-- Лента с фотографиями (разложите файлы в папке img по порядку взросления папы!) -->
             <div class="full-slider-track" id="fullSliderTrack">
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 1"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 2"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 3"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 4"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 5"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 6"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 7"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 8"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 9"></div>
-                <div class="full-slider-slide"><img src="img/папа20.png" alt="Папа 10"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 11"></div>
+                <div class="full-slider-slide"><img src="img/папа1.jpg" alt="Папа 1"></div>
+                <div class="full-slider-slide"><img src="img/папа2.jpg" alt="Папа 2"></div>
+                <div class="full-slider-slide"><img src="img/папа3.jpg" alt="Папа 3"></div>
+                <div class="full-slider-slide"><img src="img/папа4.jpg" alt="Папа 4"></div>
+                <div class="full-slider-slide"><img src="img/папа5.jpg" alt="Папа 5"></div>
+                <div class="full-slider-slide"><img src="img/папа6.jpg" alt="Папа 6"></div>
+                <div class="full-slider-slide"><img src="img/папа7.jpg" alt="Папа 7"></div>
+                <div class="full-slider-slide"><img src="img/папа8.jpg" alt="Папа 8"></div>
+                <div class="full-slider-slide"><img src="img/папа9.jpg" alt="Папа 9"></div>
+                <div class="full-slider-slide"><img src="img/папа10.jpg" alt="Папа 10"></div>
+                <div class="full-slider-slide"><img src="img/папа11.jpg" alt="Папа 11"></div>
+                <div class="full-slider-slide"><img src="img/папа12.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа13.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа14.png" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа15.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа16.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа17.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа18.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа19.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа20.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа21.jpg" alt="Папа 12"></div>
                 <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
-                <div class="full-slider-slide"><img src="img/папа22.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа23.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа24.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа25.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа26.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа071.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа081.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа082.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа083.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа091.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа092.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа093.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа094.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа095.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа096.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа097.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа098.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа099.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0910.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0911.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0912.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0913.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0914.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа0915.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа09111.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа101.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа102.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа103.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа104.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа105.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа111.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа112.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа113.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа114.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа115.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа121.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа131.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа132.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа133.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа134.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа135.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа136.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа137.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа138.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа139.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1310.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1311.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1312.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1313.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1314.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1315.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа1316.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа141.JPG" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа151.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа261.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа262.jpg" alt="Папа 12"></div>
+                <div class="full-slider-slide"><img src="img/папа263.jpg" alt="Папа 12"></div>
+
+
             </div>
         </div>
 
         <!-- Счётчик страниц внизу темного окна -->
-        <div class="full-slider-counter" id="fullSliderCounter">1 из 31</div>
+        <div class="full-slider-counter" id="fullSliderCounter">1 из 79</div>
     </div>
 
 </body>
